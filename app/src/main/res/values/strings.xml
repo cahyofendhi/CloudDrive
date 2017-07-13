@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CloudDrive</string>
+    <string name="googledrive">Google Drive</string>
+    <string name="dropbox">Dropbox</string>
+    <string name="onedrive">oneDrive</string>
+    <string name="box">Box</string>
 </resources>
