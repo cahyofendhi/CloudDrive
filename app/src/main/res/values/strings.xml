@@ -4,4 +4,6 @@
     <string name="dropbox">Dropbox</string>
     <string name="onedrive">oneDrive</string>
     <string name="box">Box</string>
+
+    <string name="app_key_dropbox">qwy7n3eh8xnfh5p</string>
 </resources>
