@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.clouddrive">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-sdk tools:overrideLibrary="com.microsoft.identity.msal"/>
 
     <application
         android:allowBackup="true"
@@ -12,13 +14,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--one drive page-->
+        <activity android:name=".view.OneDriveActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--Intent filter to capture System Browser calling back to our app after Sign In-->
+        <activity
+            android:name="com.microsoft.identity.client.BrowserTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--Add in your scheme/host from registered redirect URI-->
+                <!--By default, the scheme should be similar to 'msal[appId]' -->
+                <data android:scheme="msal35bb1437-aeb4-4594-a086-03c6057cad06"
+                    android:host="auth" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="https://login.microsoftonline.com/common"
+            android:value="authority string"/>
+        <meta-data
+            android:name="com.microsoft.identity.client.ClientId"
+            android:value="@string/app_id_one_drive"/>
 
         <!--dropbox-->
         <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />

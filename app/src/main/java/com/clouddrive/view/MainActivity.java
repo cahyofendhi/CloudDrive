@@ -1,4 +1,4 @@
-package com.clouddrive;
+package com.clouddrive.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.clouddrive.R;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 onClickLinkToDropbox(v);
                 break;
             case R.id.button_oneDrive:
+                startActivity(OneDriveActivity.newIntent(this));
                 break;
             case R.id.button_box:
                 break;
