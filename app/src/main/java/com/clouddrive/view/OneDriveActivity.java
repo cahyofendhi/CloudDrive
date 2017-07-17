@@ -57,7 +57,6 @@ public class OneDriveActivity extends AppCompatActivity {
     private final OnClickListener mStartPickingListener = new OnClickListener() {
         @Override
         public void onClick(final View v) {
-            mPicker = Picker.createPicker(ONEDRIVE_APP_ID);
             mPicker.startPicking((Activity)v.getContext(), LinkType.WebViewLink);
         }
     };
@@ -66,6 +65,8 @@ public class OneDriveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_drive);
+
+        mPicker = Picker.createPicker(ONEDRIVE_APP_ID);
 
         callGraphButton = (Button) findViewById(R.id.callGraph);
         signOutButton = (Button) findViewById(R.id.clearCache);
@@ -236,13 +237,15 @@ public class OneDriveActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        sampleApp.handleInteractiveRequestRedirect(requestCode, resultCode, data);
-        // Get the results from the picker
-        IPickerResult result = mPicker.getPickerResult(requestCode, resultCode, data);
-        // Handle the case if nothing was picked
-        if (result != null) {
-            // Do something with the picked file
-            Log.d("main", "Link to file '" + result.getName() + ": " + result.getLink());
-            return;
+        if (resultCode==Activity.RESULT_OK) {
+            // Get the results from the picker
+            IPickerResult result = mPicker.getPickerResult(requestCode, resultCode, data);
+            // Handle the case if nothing was picked
+            if (result != null) {
+                // Do something with the picked file
+                Log.d("main", "Link to file '" + result.getName() + ": " + result.getLink());
+                return;
+            }
         }
         // Handle non-OneDrive picker request
         super.onActivityResult(requestCode, resultCode, data);
