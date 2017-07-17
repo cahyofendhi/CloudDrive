@@ -40,6 +40,12 @@
                     android:host="auth" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="https://login.microsoftonline.com/common"
+            android:value="authority string"/>
+        <meta-data
+            android:name="com.microsoft.identity.client.ClientId"
+            android:value="@string/app_id_one_drive"/>
 
         <!--dropbox-->
         <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />

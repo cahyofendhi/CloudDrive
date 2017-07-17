@@ -22,6 +22,8 @@ import com.clouddrive.R;
 import com.clouddrive.*;
 import com.clouddrive.data.Constant;
 import com.microsoft.identity.client.*;
+import android.view.View.OnClickListener;
+import com.microsoft.onedrivesdk.picker.*;
 
 /**
  * Created by Bekti on 14/07/2017.
@@ -46,6 +48,20 @@ public class OneDriveActivity extends AppCompatActivity {
         return new Intent(context, OneDriveActivity.class);
     }
 
+    // Within the activity's class definition
+
+    private IPicker mPicker;
+    private String ONEDRIVE_APP_ID = Constant.ONE_DRIVE_CLIENT_ID; // Get app id here: https://account.live.com/developers/applications
+
+    // The onClickListener that will start the OneDrive picker
+    private final OnClickListener mStartPickingListener = new OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            mPicker = Picker.createPicker(ONEDRIVE_APP_ID);
+            mPicker.startPicking((Activity)v.getContext(), LinkType.WebViewLink);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +70,13 @@ public class OneDriveActivity extends AppCompatActivity {
         callGraphButton = (Button) findViewById(R.id.callGraph);
         signOutButton = (Button) findViewById(R.id.clearCache);
 
-        callGraphButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onCallGraphClicked();
-            }
-        });
+//        callGraphButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                onCallGraphClicked();
+//            }
+//        });
 
+        callGraphButton.setOnClickListener(mStartPickingListener);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onSignOutClicked();
@@ -218,7 +235,18 @@ public class OneDriveActivity extends AppCompatActivity {
     /* Handles the redirect from the System Browser */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        sampleApp.handleInteractiveRequestRedirect(requestCode, resultCode, data);
+//        sampleApp.handleInteractiveRequestRedirect(requestCode, resultCode, data);
+        // Get the results from the picker
+        IPickerResult result = mPicker.getPickerResult(requestCode, resultCode, data);
+        // Handle the case if nothing was picked
+        if (result != null) {
+            // Do something with the picked file
+            Log.d("main", "Link to file '" + result.getName() + ": " + result.getLink());
+            return;
+        }
+        // Handle non-OneDrive picker request
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     /* Use Volley to make an HTTP request to the /me endpoint from MS Graph using an access token */

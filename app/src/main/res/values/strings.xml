@@ -5,8 +5,13 @@
     <string name="onedrive">oneDrive</string>
     <string name="box">Box</string>
 
+    <!--dropbox-->
     <string name="app_key_dropbox">qwy7n3eh8xnfh5p</string>
     <string name="app_key_scheme_dropbox">db-qwy7n3eh8xnfh5p</string>
     <string name="app_secret_key_dropbox">3ylt753wldl4lsn</string>
     <string name="app_token_dopbox">xKaqpdGI97UAAAAAAAAB-3acB1kt6d6xh174_eLquDyzFtYFVbipVYZjW45pRMRg</string>
+
+    <!--one drive-->
+    <string name="app_id_one_drive">35bb1437-aeb4-4594-a086-03c6057cad06</string>
+
 </resources>
